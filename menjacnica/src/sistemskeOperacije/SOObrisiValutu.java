@@ -1,4 +1,4 @@
-package sistemskeoperacije;
+package sistemskeOperacije;
 
 import java.util.LinkedList;
 

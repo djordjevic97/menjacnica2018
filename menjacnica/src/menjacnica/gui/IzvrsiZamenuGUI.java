@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 
 import menjacnica.Valuta;
+import menjacnica.gui.kontroler.GUIKontroler;
+
 import java.awt.Toolkit;
 
 public class IzvrsiZamenuGUI extends JFrame {
@@ -39,13 +41,13 @@ public class IzvrsiZamenuGUI extends JFrame {
 	private JLabel lblValuta;
 	private JLabel lblIznos;
 	private JRadioButton rdbtnKupovina;
-	private JRadioButton rdbtnProdaja;
+	private static JRadioButton rdbtnProdaja;
 	private JLabel lblVrstaTransakcije;
 	private JButton btnIzvrsiZamenu;
 	private JButton btnOdustani;
 	private JTextField textFieldIznos;
 	private JSlider slider;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final static ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField textFieldValuta;
 	private JLabel lblKonacniIznos;
 	private JTextField textFieldKonacniIznos;
@@ -164,7 +166,8 @@ public class IzvrsiZamenuGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izracunaj iznos");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					izvrsiZamenu();
+					String iznos = GUIKontroler.izvrsiZamenu(valuta, getRdbtnProdaja().isSelected(), getTextFieldIznos().getText());
+					getTextFieldKonacniIznos().setText(iznos);
 				}
 			});
 			btnIzvrsiZamenu.setBounds(24, 234, 160, 25);
@@ -238,18 +241,5 @@ public class IzvrsiZamenuGUI extends JFrame {
 		textFieldKupovniKurs.setText(""+valuta.getKupovni());
 		textFieldValuta.setText(valuta.getSkraceniNaziv());
 	}
-	
-	private void izvrsiZamenu(){
-		try{
-			double konacniIznos = 
-					glavniProzor.sistem.izvrsiTransakciju(valuta,
-							rdbtnProdaja.isSelected(), 
-							Double.parseDouble(textFieldIznos.getText()));
-		
-			textFieldKonacniIznos.setText(""+konacniIznos);
-		} catch (Exception e1) {
-		JOptionPane.showMessageDialog(contentPane, e1.getMessage(),
-				"Greska", JOptionPane.ERROR_MESSAGE);
-	}
-	}
+
 }

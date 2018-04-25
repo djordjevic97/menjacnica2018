@@ -61,4 +61,6 @@ public class MenjacnicaTableModel extends AbstractTableModel {
 		return valute.get(index);
 	}
 
+
+
 }
